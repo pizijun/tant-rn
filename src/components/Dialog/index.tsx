@@ -23,9 +23,9 @@ interface DialogProps extends OverlayProps {
   showCancelButton?: boolean;
   type?: 'alert' | 'prompt';
   placeholder?: string;
-  inputValue?: string | number;
-  onCancel?: () => void;
-  onConfirm?: () => void;
+  inputValue?: string;
+  onCancel?: (text?: string) => void;
+  onConfirm?: (text?: string) => void;
 };
 
 const Dialog: FC<DialogProps> = (props) => {
@@ -54,6 +54,10 @@ const Dialog: FC<DialogProps> = (props) => {
   const [inputText, setInputText] = useState(value);
   const inputEl = useRef(null);
 
+  useEffect(() => {
+    setInputText(value);
+  }, [value])
+
   // input text change
   const onChangeText = (text: string) => {
     setInputText(text);
@@ -61,12 +65,20 @@ const Dialog: FC<DialogProps> = (props) => {
 
   // 取消 action
   const handleOnCancel = () => {
-    onCancel && onCancel();
+    if (type === 'prompt') {
+      onCancel && onCancel(inputText);
+    } else {
+      onCancel && onCancel();
+    }
   };
 
   // 确认 action
   const handleOnConfirm = () => {
-    onConfirm && onConfirm();
+    if (type === 'prompt') {
+      onConfirm && onConfirm(inputText);
+    } else {
+      onConfirm && onConfirm();
+    }
   };
 
   return (

@@ -3,8 +3,8 @@ import { View, Image, Text, StyleSheet } from "react-native";
 
 interface emptyImage {
   uri: string;
-  width: string | number;
-  height: string | number;
+  width?: string | number;
+  height?: string | number;
 };
 
 interface EmptyProps {
