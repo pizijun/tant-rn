@@ -9,7 +9,7 @@ interface RightIcon {
 };
 
 interface SearchProps {
-  value?: string | number;
+  value?: string;
   maxlength?: string | number;
   placeholder?: string;
   clearable?: boolean;
