@@ -1,31 +1,72 @@
-import React, { FC, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import {
   StyleSheet,
   View,
   Text,
-  Image,
-  TouchableWithoutFeedback,
+  StyleProp,
+  TextStyle,
 } from 'react-native';
-import flexbem from '../Style/flexbem';
+import { parseFormat, parseTimeData, isSameSecond } from '../../utils';
 
 interface CountDownProps {
   time?: number | string;
   format?: string;
-  millisecond?: boolean;
+  textStyle?: StyleProp<TextStyle>;
 };
 
 const CountDown: FC<CountDownProps> = (props) => {
   const {
     time = 0,
     format = 'HH:mm:ss',
-    millisecond = false,
+    textStyle,
   } = props;
 
-  const [remain, setRemain] = useState(+time);
+  const [remain, setRemain] = useState(0);
+  const remainRef = useRef(0);
+  const [endTime, setEndTime] = useState(0);
+  const [isCounting, setIsCounting] = useState(false);
+
+  const getRemain = () => {
+    return Math.max(endTime - Date.now(), 0);
+  };
+
+  useEffect(() => {
+    const intTime = +time;
+    remainRef.current = intTime;
+    setRemain(intTime);
+    setEndTime(Date.now() + intTime);
+    setIsCounting(true);
+  }, [time]);
+
+  useEffect(() => {
+    if (isCounting) {
+      let timerId: number;
+  
+      const f = () => {
+        const curRemain = getRemain();
+
+        if (!isSameSecond(curRemain, remainRef.current) || curRemain === 0) {
+          remainRef.current = curRemain;
+          setRemain(curRemain);
+        }
+
+        if (remainRef.current > 0) {
+          timerId = requestAnimationFrame(f);
+        }
+      };
+  
+      timerId = requestAnimationFrame(f);
+  
+      return () => {
+        setIsCounting(false);
+        cancelAnimationFrame(timerId);
+      };
+    }
+  }, [isCounting]);
 
   return (
     <View>
-      <Text style={[styles.textTime]}>13:00:11</Text>
+      <Text style={StyleSheet.flatten([styles.textTime, textStyle])}>{parseFormat(format, parseTimeData(remain))}</Text>
     </View>
   );
 };
