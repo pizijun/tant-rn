@@ -12,6 +12,7 @@ interface CountDownProps {
   time?: number | string;
   format?: string;
   textStyle?: StyleProp<TextStyle>;
+  onFinish?: () => void;
 };
 
 const CountDown: FC<CountDownProps> = (props) => {
@@ -19,6 +20,7 @@ const CountDown: FC<CountDownProps> = (props) => {
     time = 0,
     format = 'HH:mm:ss',
     textStyle,
+    onFinish,
   } = props;
 
   const [remain, setRemain] = useState(0);
@@ -44,8 +46,10 @@ const CountDown: FC<CountDownProps> = (props) => {
   
       const f = () => {
         const curRemain = getRemain();
-
         if (!isSameSecond(curRemain, remainRef.current) || curRemain === 0) {
+          if (curRemain === 0) {
+            onFinish && onFinish();
+          }
           remainRef.current = curRemain;
           setRemain(curRemain);
         }
