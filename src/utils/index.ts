@@ -75,3 +75,19 @@ export function parseFormat(format: string, timeData: TimeData): string {
 export function isSameSecond(time1: number, time2: number): boolean {
   return Math.floor(time1 / 1000) === Math.floor(time2 / 1000);
 }
+
+// 获取节点的尺寸
+export function getRect(node: any) {
+  return new Promise((resolve) => {
+    node.measure((x: number, y: number, width: number, height: number, pageX: number, pageY: number) => {
+      resolve({
+        x,
+        y,
+        width,
+        height,
+        pageX,
+        pageY,
+      });
+    });
+  });
+};
