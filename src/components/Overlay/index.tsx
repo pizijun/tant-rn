@@ -51,16 +51,7 @@ const Overlay: FC<OverlayProps> = (props) => {
           style={StyleSheet.flatten([styles.backdrop, backdropStyle])}
         />
       </TouchableWithoutFeedback>
-
-      <View style={styles.container} pointerEvents="box-none">
-        <View
-          style={StyleSheet.flatten([
-            styles.overlay,
-          ])}
-        >
-          {children}
-        </View>
-      </View>
+      {children}
     </Modal>
   );
 };
@@ -81,10 +72,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  fullscreen: {
-    width: '100%',
-    height: '100%',
-  },
   overlay: {
     ...Platform.select({
       android: {
@@ -96,18 +83,6 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
       },
     }),
-  },
-  borderRed: {
-    borderWidth: 1,
-    borderColor: 'red'
-  },
-  borderBlue: {
-    borderWidth: 1,
-    borderColor: 'blue'
-  },
-  border: {
-    borderWidth: 1,
-    borderColor: 'black',
   },
 });
 
