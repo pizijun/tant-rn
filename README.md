@@ -43,11 +43,11 @@ react-native run-android
 
 ## 组件完成度
 
-- [] ActionSheet
-- [] Button
+- [ ] ActionSheet
+- [ ] Button
 - [x] CountDown
 - [x] Dialog
-- [] DatePicker
+- [ ] DatePicker
 - [x] Empty
 - [x] InfiniteLoading
 - [x] NavBar
@@ -56,3 +56,4 @@ react-native run-android
 - [x] Search
 - [x] Stepper
 - [x] Tabs
+- [ ] Toast
