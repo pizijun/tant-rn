@@ -5,12 +5,13 @@ import {
   Platform,
   StyleProp,
   ViewStyle,
+  KeyboardAvoidingView,
 } from 'react-native';
-import Overlay from '../Overlay';
+import Overlay, { OverlayProps } from '../Overlay';
 
 type PopupPosition = 'center' | 'bottom' | 'top';
 
-interface PopupProps {
+interface PopupProps extends OverlayProps {
   visible: boolean;
   position?: PopupPosition;
   customStyle?: StyleProp<ViewStyle>,
@@ -37,16 +38,18 @@ const Popup: FC<PopupProps> = (props) => {
         onBackdropPress={handlePressOverlay}
       >
         <View style={styles.container} pointerEvents="box-none">
-          <View
-            style={[
-              styles.overlay,
-              customStyle,
-              position === 'top' && styles.positionTop,
-              position === 'bottom' && styles.positionBottom,
-            ]}
-          >
-            {children}
-          </View>
+          <KeyboardAvoidingView style={[styles.container, {width: '100%'}]} behavior={Platform.OS == 'ios' ? 'padding' : 'height'}>
+            <View
+              style={[
+                styles.overlay,
+                customStyle,
+                position === 'top' && styles.positionTop,
+                position === 'bottom' && styles.positionBottom,
+              ]}
+            >
+              {children}
+            </View>
+          </KeyboardAvoidingView>
         </View>
       </Overlay>
       

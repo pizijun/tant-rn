@@ -16,6 +16,7 @@ interface RightIcon {
 
 interface NavBarProps {
   title?: string;
+  border?: boolean;
   rightText?: string;
   rightIcon?: RightIcon;
   onPressRight?: () => void;
@@ -26,6 +27,7 @@ const NavBar: FC<NavBarProps> = (props) => {
   const {
     title = '',
     rightText = '',
+    border = false,
     rightIcon,
     onPressRight,
     onPressBack,
@@ -42,7 +44,7 @@ const NavBar: FC<NavBarProps> = (props) => {
   };
 
   return (
-    <View style={[styles.navBar, flexbem.flexRow, flexbem.flexCenter]}>
+    <View style={[styles.navBar, flexbem.flexRow, flexbem.flexCenter, border && {borderBottomColor: '#E8E8E8', borderBottomWidth: StyleSheet.hairlineWidth}]}>
       <TouchableWithoutFeedback onPress={handlePressLeft}>
         <View style={[styles.navBarLeft, flexbem.flexCenter]}>
           <View>

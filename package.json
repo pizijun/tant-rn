@@ -1,6 +1,6 @@
 {
   "name": "tant-rn",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "UI components for react native with react hooks and typescript",
   "main": "index.js",
   "scripts": {

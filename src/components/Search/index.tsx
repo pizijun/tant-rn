@@ -1,5 +1,5 @@
-import React, { FC, useRef, useState } from "react";
-import { View, Text, StyleSheet, TextInput, Image, TouchableWithoutFeedback, NativeSyntheticEvent, TextInputFocusEventData, ColorValue } from "react-native";
+import React, { FC, useEffect, useRef, useState } from "react";
+import { View, Text, StyleSheet, TextInput, Image, TouchableWithoutFeedback, NativeSyntheticEvent, TextInputFocusEventData, ColorValue, TextInputComponent } from "react-native";
 import flexbem from '../Style/flexbem';
 
 interface RightIcon {
@@ -50,7 +50,7 @@ const Search: FC<SearchProps> = (props) => {
     onPressInput,
   } = props;
   
-  let value;
+  let value: string;
   if ('value' in props) {
     value = props.value || '';
   } else {
@@ -58,7 +58,11 @@ const Search: FC<SearchProps> = (props) => {
   }
 
   const [inputText, setInputText] = useState(value);
-  const inputEl = useRef(null);
+  const inputEl = useRef<TextInput>(null!);
+
+  useEffect(() => {
+    setInputText(value);
+  }, [value]);
 
   // 清空搜索
   const clearInputText = () => {

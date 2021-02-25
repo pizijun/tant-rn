@@ -9,11 +9,12 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import Overlay, { OverlayProps } from '../Overlay';
+import Popup from '../Popup';
 import flexbem from '../Style/flexbem';
 
 
-interface DialogProps extends OverlayProps {
+interface DialogProps {
+  visible: boolean;
   title?: string;
   message?: string | ReactNode;
   messageAlign?: 'left' | 'center' | 'right';
@@ -44,7 +45,7 @@ const Dialog: FC<DialogProps> = (props) => {
     onConfirm,
   } = props;
 
-  let value;
+  let value: string;
   if ('inputValue' in props) {
     value = props.inputValue || '';
   } else {
@@ -82,7 +83,7 @@ const Dialog: FC<DialogProps> = (props) => {
   };
 
   return (
-    <Overlay visible={visible} lock>
+    <Popup visible={visible} lock>
       <View style={[styles.dialog]}>
         <View style={[styles.dialogHead]}><Text style={[styles.textDialogHead]}>{title}</Text></View>
         <View style={[styles.dialogContent, {paddingTop: message ? (title ? 10 : 15) : 0}]}>
@@ -122,7 +123,7 @@ const Dialog: FC<DialogProps> = (props) => {
           </View>
         ) : null}
       </View>
-    </Overlay>
+    </Popup>
   );
 };
 
