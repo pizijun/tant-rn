@@ -136,7 +136,7 @@ export const Tabs: FC<TabsProps> = (props) => {
       <View style={[{ flex: 1 }]}>
         <ScrollView
           ref={scrollTabView}
-          onMomentumScrollEnd={(e) => {
+          onScroll={(e) => {
             const index = Math.round(e.nativeEvent.contentOffset.x / containerWidth);
             if (index !== currentIndex) {
               onChange(tabs[currentIndex], currentIndex);
